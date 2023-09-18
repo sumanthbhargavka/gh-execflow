@@ -1,8 +1,22 @@
 name: Reusable-deployment-file
-on: workflow_call
+on:
+    workflow_call:
+        inputs:
+            artifact-name:
+                description: The description will be written here
+                required: false
+                default: dist
+                type: string
+
 jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
+            - name: Get code
+              uses: actions/download-artifact@v3
+              with:
+                name: ${{ inputs.artifact-name }}
+            - name: list files
+              run: ls
             - name: Output Information
               run: echo "Reusable Deployment Func"
